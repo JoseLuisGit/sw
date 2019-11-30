@@ -1,9 +1,9 @@
 const SERVER_NAME = "10.0.3.2:8000";
 const URL_login = "http://$SERVER_NAME/loginmovil"; 
-// const URL_CasoCliente="http://$SERVER_NAME/casoscliente";
-// const URL_Documento="http://$SERVER_NAME/documento";
-// const URL_Casoprocurador="http://$SERVER_NAME/casosprocurador";
-// const URL_Casoabogado="http://$SERVER_NAME/casosabogado";
+ const URL_Materias="http://$SERVER_NAME/docentematerias";
+const URL_Estudiante="http://$SERVER_NAME/estudiantesmaterias";
+ const URL_datos="http://$SERVER_NAME/asistenciaestudiante";
+ const URL_Evento="http://$SERVER_NAME/eventos";
 // const URL_Procuradores="http://$SERVER_NAME/Procurador";
 // const URL_Cliente="http://$SERVER_NAME/Cliente";
 // const URL_CasoNA = "http://$SERVER_NAME/casosNA";

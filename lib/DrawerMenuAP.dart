@@ -26,7 +26,7 @@ class _DrawerMenuAPState extends State<DrawerMenuAP> {
      
     ScreenHiddenDrawer(
         ItemHiddenMenu(
-          name: "Facultades",
+          name: "Materias",
           colorLineSelected: Colors.teal,
           baseStyle: TextStyle( color: Colors.white.withOpacity(0.8), fontSize: 25.0 ),
           selectedStyle: TextStyle(color: Colors.teal),
@@ -43,7 +43,7 @@ class _DrawerMenuAPState extends State<DrawerMenuAP> {
             print("Click item");
           },
         ),
-         HomeDoc(id: widget.id,tipo: widget.tipo)
+         HomeDoc(id: widget.id,tipo: widget.tipo,idSemestre: widget.idSemestre,)
         
         
     )
