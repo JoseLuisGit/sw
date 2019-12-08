@@ -37,6 +37,7 @@ class _ListStudentState extends State<ListStudent> {
                           idgrupo: widget.idgrupo,
                           idsemestre: widget.idSemestre,
                           iddocente: widget.iddocente,
+                          tipo: 'doc',
 
                         )));
 

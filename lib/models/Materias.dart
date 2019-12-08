@@ -59,5 +59,31 @@ Future<List<Materias>> fetchMateriass(http.Client client, int iddocente, int ids
    if (statusCode < 200 || statusCode > 400 || json == null) {
      throw new Exception("Error while fetching data");
    }
+
+
+
  
  }
+
+
+ Future<void> crearAsistencia(http.Client client, Map<String, dynamic> body) async {
+   final response = await client.post('$URL_Materias/asistencia', body: body);
+
+   final int statusCode = response.statusCode;
+
+   if (statusCode < 200 || statusCode > 400 || json == null) {
+     throw new Exception("Error while fetching data");
+   }}
+   
+   Future<void> marcarAsistenciaevento(http.Client client, Map<String, dynamic> body) async {
+   final response = await client.put('$URL_Evento/marcar', body: body);
+
+   final int statusCode = response.statusCode;
+
+   if (statusCode < 200 || statusCode > 400 || json == null) {
+     throw new Exception("Error while fetching data");
+   }
+
+   
+   } 
+ 

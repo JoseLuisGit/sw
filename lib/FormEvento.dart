@@ -302,6 +302,7 @@ class _FormEventState extends State<FormEvent> {
                           locale: LocaleType.es,
                           onChanged: (date) {}, onConfirm: (date) {
                         setState(() {
+                        
                           _tolerancia = '${date.hour}:${date.minute}:00';
                         });
                       }, currentTime: DateTime.now());
@@ -372,7 +373,9 @@ class _FormEventState extends State<FormEvent> {
                                           widget.idsemestre,
                                         ),
                                         builder: (context, snapshot) {
-                                          if (snapshot.hasData) {}
+                                          if (snapshot.hasData) {
+                                            print(snapshot.data);
+                                          }
 
                                           return snapshot.hasData
                                               ? DialogContent(
@@ -445,6 +448,7 @@ class _FormEventState extends State<FormEvent> {
                       params['fecha'] = _date;
                       params['hora_inicio'] = _horainicio;
                       params['hora_fin'] = _horafinal;
+                      params['idsemestre'] = widget.idsemestre.toString();
                       params['data'] = "$dataId";
                       params['tolerancia'] = _tolerancia;
                       params['idpersona'] = widget.iddocente.toString();
@@ -458,6 +462,7 @@ class _FormEventState extends State<FormEvent> {
                                     iddocente: widget.iddocente,
                                     idgrupo: widget.idgrupo,
                                     idsemestre: widget.idsemestre,
+                                    tipo: 'doc',
                                   )));
                     },
                     child: const Text("Crear Evento"),
@@ -467,56 +472,6 @@ class _FormEventState extends State<FormEvent> {
     );
   }
 
-  Widget listaEstudiantes(List<Estudiante> data, BuildContext context) {
-    return new ListView.builder(
-        itemCount: data.length,
-        itemBuilder: (BuildContext context, int index) {
-          return new Card(
-            child: new Container(
-              padding: new EdgeInsets.all(5.0),
-              child: new Column(
-                children: <Widget>[
-                  new ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5.0),
-                    leading: (existeId(data[index].iddg))
-                        ? IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              setState(() {
-                                //Para actualizar los iconButtons
-                                this.dataId.remove(data[index].iddg);
-                              });
-                              print(this.dataId);
-                            },
-                            color: Colors.red,
-                          )
-                        : //False
-                        IconButton(
-                            icon: Icon(Icons.check),
-                            onPressed: () {
-                              setState(() {
-                                //Para actualizar los iconButtons
-                                this.dataId.add(data[index].iddg);
-                              });
-                              print(this.dataId);
-                            },
-                            color: Colors.green,
-                          ),
-                    title: new Text(
-                        '${data[index].nombre} ${data[index].apellidos}'),
-                    subtitle: Text(
-                        'Registro' + ': ' + data[index].registro.toString()),
-                  )
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  bool existeId(int id) {
-    return this.dataId.contains(id);
-  }
 }
 
 class DialogContent extends StatefulWidget {
@@ -542,14 +497,14 @@ class _DialogContentState extends State<DialogContent> {
                 child: new Column(
                   children: <Widget>[
                     new ListTile(
-                      trailing: (existeId(widget.estudiantes[index].id))
+                      leading: (existeId(widget.estudiantes[index].iddg))
                           ? IconButton(
                               icon: Icon(Icons.clear),
                               onPressed: () {
                                 setState(() {
                                   //Para actualizar los iconButtons
                                   widget.dataId
-                                      .remove(widget.estudiantes[index].id);
+                                      .remove(widget.estudiantes[index].iddg);
                                 });
                                 print(widget.dataId);
                               },
@@ -562,7 +517,7 @@ class _DialogContentState extends State<DialogContent> {
                                 setState(() {
                                   //Para actualizar los iconButtons
                                   widget.dataId
-                                      .add(widget.estudiantes[index].id);
+                                      .add(widget.estudiantes[index].iddg);
                                 });
                                 print(widget.dataId);
                               },

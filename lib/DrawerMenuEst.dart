@@ -2,19 +2,19 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 
-import 'HomeDoc.dart';
 
+import 'HomeEst.dart';
 
-class DrawerMenuAP extends StatefulWidget {
+class DrawerMenuEst extends StatefulWidget {
   final int id;
-  final String tipo;
-  DrawerMenuAP({Key key,this.id,this.tipo}) : super(key: key);
+  final int idSemestre;
+  DrawerMenuEst({Key key,this.id, this.idSemestre}) : super(key: key);
 
   @override
-  _DrawerMenuAPState createState() => _DrawerMenuAPState();
+  _DrawerMenuAPestState createState() => _DrawerMenuAPestState();
 }
 
-class _DrawerMenuAPState extends State<DrawerMenuAP> {
+class _DrawerMenuAPestState extends State<DrawerMenuEst> {
 
   List<ScreenHiddenDrawer> itens; 
 
@@ -28,7 +28,7 @@ class _DrawerMenuAPState extends State<DrawerMenuAP> {
           baseStyle: TextStyle( color: Colors.white.withOpacity(0.8), fontSize: 25.0 ),
           selectedStyle: TextStyle(color: Colors.teal),
         ),
-        HomeDoc(id: widget.id,tipo: widget.tipo)
+        HomePage(id: widget.id, idSemestre: widget.idSemestre,)
     ),
     ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -40,7 +40,7 @@ class _DrawerMenuAPState extends State<DrawerMenuAP> {
             print("Click item");
           },
         ),
-         HomeDoc(id: widget.id,tipo: widget.tipo)
+          HomePage(id: widget.id)
         
         
     )

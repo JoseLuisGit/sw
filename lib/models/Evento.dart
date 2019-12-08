@@ -76,6 +76,15 @@ Future<List<Evento>> fetchEventos(http.Client client, int idgrupo, int idsemestr
   }
 }
 
+Future<List<Evento>> fetchEventosEstudiante(http.Client client,int iddt, int idgrupo) async {
+  final response = await client.get('$URL_Evento/estudiantemovil?idgrupo=$idgrupo&&iddt=$iddt');
+  if (response.statusCode == 200) {
+    return parseEventos(response.body);
+  } else {
+    throw Exception('No hay Internet');
+  }
+}
+
 
 
 

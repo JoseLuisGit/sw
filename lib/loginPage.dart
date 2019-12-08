@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'DrawerMenuAP.dart';
+import 'DrawerMenuEst.dart';
 import 'utils/Logo.dart';
 import 'utils/Urls.dart';
 import 'dart:convert';
@@ -47,14 +48,15 @@ class _LoginPageState extends State<LoginPage> {
               ) 
           );
       } else {
-          //  Navigator.of(context).pushReplacement(
-          //  new MaterialPageRoute(
-          //      builder: (context) => new DrawerMenuAP(
-          //            id: datauser[0]['id'],
-          //            tipo: datauser[0]['password'],
-          //          ) 
-          //      ) 
-          //  );
+           Navigator.of(context).pushReplacement(
+           new MaterialPageRoute(
+              builder: (context) => new DrawerMenuEst(
+                    id: datauser[0]['id'],
+                    idSemestre: datauser[0]['telefono'],
+                    
+                    ) 
+             ) 
+          );
       }
 
 
