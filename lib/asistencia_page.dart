@@ -57,8 +57,10 @@ class _AsistenciaPageState extends State<AsistenciaPage> {
               print(snapshot.error);
             }
 
-            if(snapshot.hasData){              
-              snapshot.data.length != 0 ? miAsistencia=snapshot.data[0] : miAsistencia=null;
+            if(snapshot.hasData){   
+         
+                 snapshot.data.length != 0 ? miAsistencia=snapshot.data[0] : miAsistencia=null;
+           
               return MarcarAsistencia(
                 idestudiante: widget.id,idsemestre: widget.idsemestre,
                 idgrupo: widget.idgrupo, grupo: widget.grupo, iddetgrupo: widget.iddetgrupo, 
@@ -86,7 +88,8 @@ class _AsistenciaPageState extends State<AsistenciaPage> {
                                           if(onValue==0){
 
                                             Navigator.push(context, MaterialPageRoute(
-                                              builder: (context)=>Biometric(iddet: widget.iddetgrupo,tipo: 'asist',idAsistencia: miAsistencia.idasistencia,)
+                                              builder: (context)=>Biometric(iddet: widget.iddetgrupo,tipo: 'asist',idAsistencia: miAsistencia.idasistencia,
+                                                  idgrupo: widget.idgrupo,idsemestre: widget.idsemestre,)
                                             ));
 
                                           }else{

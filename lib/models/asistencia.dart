@@ -69,3 +69,20 @@ Future<int> registrarAsistencia(http.Client client, int idAsistencia,int idgrupo
       throw Exception('No hay Internet');
     }
   }}
+
+
+
+
+ Future<void> crearAsistenciaEstudiante(http.Client client, Map<String, dynamic> body) async {
+   final response = await client.post('$URL_Asistencia/agregarEstudiante', body: body);
+
+   final int statusCode = response.statusCode;
+
+   if (statusCode < 200 || statusCode > 400 || json == null) {
+     throw new Exception("Error while fetching data");
+   }
+
+
+
+ 
+ }

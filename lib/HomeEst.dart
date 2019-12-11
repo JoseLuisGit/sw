@@ -3,6 +3,7 @@ import 'asistencia_page.dart';
 import 'models/grupos.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
+import 'ListEventos.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -86,10 +87,10 @@ class _GruposListaState extends State<GruposLista> {
                 ),
                 title: new Text(widget.misGrupos[index].grupo== null
                     ? "No hay sigla de grupo"
-                    : '${widget.misGrupos[index].grupo} - ${widget.misGrupos[index].materia}'),
-                subtitle: new Text(widget.misGrupos[index].descripcion == null
+                    : '${widget.misGrupos[index].grupo} - ${widget.misGrupos[index].materia}',style: TextStyle(color: Colors.black),),
+                subtitle: new Text(widget.misGrupos[index].sigla == null
                     ? "No hay descripcion"
-                    : widget.misGrupos[index].descripcion),
+                    : widget.misGrupos[index].sigla ,style: TextStyle(color: Colors.black54),),
               ),
             ),
             actions: <Widget>[
@@ -98,18 +99,26 @@ class _GruposListaState extends State<GruposLista> {
                   color: Colors.blueAccent,
                   icon: Icons.event,
                   onTap: () {
-
+               Navigator.push(context, MaterialPageRoute(
+                  builder:(context)=>ListEventos(
+                    tipo: 'est',
+                    idgrupo: widget.misGrupos[index].id,
+                    iddt: widget.misGrupos[index].iddetgrupo,
+                    idsemestre: widget.idsemestre ,
+                    nombre: widget.misGrupos[index].materia,
+                  ) 
+                ));
                    
                   }),
             ],
-            secondaryActions: <Widget>[
-              new IconSlideAction(
-                caption: 'opcion',
-                color: Colors.green,
-                icon: Icons.keyboard_arrow_down,
-                onTap: () => {},
-              ),
-            ],
+            // secondaryActions: <Widget>[
+            //   new IconSlideAction(
+            //     caption: 'opcion',
+            //     color: Colors.green,
+            //     icon: Icons.keyboard_arrow_down,
+            //     onTap: () => {},
+            //   ),
+            // ],
           ),
           onTap: () {
             int selectedId = widget.misGrupos[index].id;

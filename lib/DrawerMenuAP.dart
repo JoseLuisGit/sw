@@ -1,4 +1,5 @@
 
+import 'package:asist_control/temas.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 
@@ -35,7 +36,7 @@ class _DrawerMenuAPState extends State<DrawerMenuAP> {
     ),
     ScreenHiddenDrawer(
         ItemHiddenMenu(
-          name: "Notas",
+          name: "Temas",
           colorLineSelected: Colors.amberAccent,
           baseStyle: TextStyle( color: Colors.white.withOpacity(0.8), fontSize: 25.0 ),
           selectedStyle: TextStyle(color: Colors.amberAccent),
@@ -43,7 +44,7 @@ class _DrawerMenuAPState extends State<DrawerMenuAP> {
             print("Click item");
           },
         ),
-         HomeDoc(id: widget.id,tipo: widget.tipo,idSemestre: widget.idSemestre,)
+         TemasScreen()
         
         
     )

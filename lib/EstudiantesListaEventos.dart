@@ -103,9 +103,9 @@ class _EstudianteFetchState extends State<EstudianteFetch> {
                   child: Icon(Icons.event),
                   foregroundColor: Colors.white,
                 ),
-                title: new Text('${widget.estudiante[index].nombre} ${widget.estudiante[index].apellidos}'),
+                title: new Text('${widget.estudiante[index].nombre} ${widget.estudiante[index].apellidos}',style: TextStyle(color: Colors.black),),
                 subtitle: new Text(
-                    'Registro: ${widget.estudiante[index].registro}'),
+                    'Registro: ${widget.estudiante[index].registro}',style: TextStyle(color: Colors.black54),),
               ),
             ),
         

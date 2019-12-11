@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer/hidden_drawer_menu.dart';
 
-
+import 'temas.dart';
 import 'HomeEst.dart';
 
 class DrawerMenuEst extends StatefulWidget {
@@ -32,7 +32,7 @@ class _DrawerMenuAPestState extends State<DrawerMenuEst> {
     ),
     ScreenHiddenDrawer(
         ItemHiddenMenu(
-          name: "Horario",
+          name: "Temas",
           colorLineSelected: Colors.amberAccent,
           baseStyle: TextStyle( color: Colors.white.withOpacity(0.8), fontSize: 25.0 ),
           selectedStyle: TextStyle(color: Colors.amberAccent),
@@ -40,7 +40,7 @@ class _DrawerMenuAPestState extends State<DrawerMenuEst> {
             print("Click item");
           },
         ),
-          HomePage(id: widget.id)
+          TemasScreen()
         
         
     )

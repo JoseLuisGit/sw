@@ -56,6 +56,8 @@ class _BiometricState extends State<Biometric> {
             idgrupo: widget.idgrupo,
             idsemestre: widget.idsemestre,
             latitud: widget.latitud,
+            idAsistencia: widget.idAsistencia,
+            iddetgrupo: widget.iddet,
 
             longitud: widget.longitud,
           ),
@@ -72,10 +74,12 @@ class BiometricAuth extends StatefulWidget {
   final int idgrupo;
   final int idsemestre;
   final int idevento;
+  final int iddetgrupo;
   final int idAsistencia;
 
   BiometricAuth(
       {Key key,
+      this.iddetgrupo,
       this.idAsistencia,
       this.idevento,
       this.idsemestre,
@@ -146,7 +150,7 @@ class _BiometricAuth extends State<BiometricAuth> {
     setState(() async {
       if (isAuthorized) {
         _isAuthorized = "Authorized";
-   Map<String, dynamic> params = Map<String, dynamic>();
+            Map<String, dynamic> params = Map<String, dynamic>();
         if (widget.tipo == 'doc') {
        
           params['latitud'] = widget.latitud.toString();
@@ -160,12 +164,11 @@ class _BiometricAuth extends State<BiometricAuth> {
           await marcarAsistenciaevento(http.Client(), params);
         }else if(widget.tipo=='asist'){ 
       
-           params['latitud'] = widget.latitud.toString();
-          params['longitud'] = widget.longitud.toString();
-          params['idgrupo'] = widget.idgrupo.toString();
-              params['idsemestre'] = widget.idsemestre.toString();
+ 
+              params['idasistencia'] = widget.idAsistencia.toString();
+              params['iddetgrupo'] = widget.iddetgrupo.toString();
 
-          await crearAsistencia(http.Client(), params);
+          await crearAsistenciaEstudiante(http.Client(), params);
           
         }
 
@@ -191,66 +194,85 @@ class _BiometricAuth extends State<BiometricAuth> {
                   icon: Icon(Icons.access_alarms),
                   onPressed: ()async{
                      Map<String, dynamic> params = Map<String, dynamic>();
+        if (widget.tipo == 'doc') {
+       
+          params['latitud'] = widget.latitud.toString();
+          params['longitud'] = widget.longitud.toString();
+          params['idgrupo'] = widget.idgrupo.toString();
+          params['idsemestre'] = widget.idsemestre.toString();
+          await crearAsistencia(http.Client(), params);
+        } else if (widget.tipo == 'estevento') {
+         
+          params['id'] = widget.idevento.toString();
+          await marcarAsistenciaevento(http.Client(), params);
+        }else if(widget.tipo=='asist'){ 
+      
+ 
+              params['idasistencia'] = widget.idAsistencia.toString();
+              params['iddetgrupo'] = widget.iddetgrupo.toString();
 
-                     params['id'] = widget.idevento.toString();
-          await marcarAsistenciaevento(http.Client(), params); 
+          await crearAsistenciaEstudiante(http.Client(), params);
+          
+        }
+
+        Navigator.pop(context);
                   },
                 ),
-                RaisedButton(
-                  onPressed: _checkBiometric,
-                  child: Text("Check Biometric"),
-                  color: Colors.lime,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                _canCheckBiometric == true
-                    ? Icon(
-                        Icons.check,
-                        color: Colors.green,
-                        size: 50,
-                      )
-                    : Icon(
-                        Icons.cancel,
-                        color: Colors.lime,
-                        size: 50,
-                      ),
+                // RaisedButton(
+                //   onPressed: _checkBiometric,
+                //   child: Text("Check Biometric"),
+                //   color: Colors.lime,
+                // ),
+                // SizedBox(
+                //   width: 10,
+                // ),
+                // _canCheckBiometric == true
+                //     ? Icon(
+                //         Icons.check,
+                //         color: Colors.green,
+                //         size: 50,
+                //       )
+                //     : Icon(
+                //         Icons.cancel,
+                //         color: Colors.lime,
+                //         size: 50,
+                //       ),
               ],
             ),
+            SizedBox(
+              height: 50.0,
+            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: <Widget>[
+            //     RaisedButton(
+            //       onPressed: _getListOfBiometricTypes,
+            //       child: Text("Available Biometric Types"),
+            //       color: Colors.lime,
+            //     ),
+            //     SizedBox(
+            //       width: 10,
+            //     ),
+            //     _availableBiometricTypes.toString() ==
+            //             '[BiometricType.fingerprint]'
+            //         ? Text('fingerprint')
+            //         : Text('${_availableBiometricTypes.toString()}'),
+            //   ],
+            // ),
             SizedBox(
               height: 50.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RaisedButton(
-                  onPressed: _getListOfBiometricTypes,
-                  child: Text("Available Biometric Types"),
-                  color: Colors.lime,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                _availableBiometricTypes.toString() ==
-                        '[BiometricType.fingerprint]'
-                    ? Text('fingerprint')
-                    : Text('${_availableBiometricTypes.toString()}'),
-              ],
-            ),
-            SizedBox(
-              height: 50.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Authorization : "),
-                _isAuthorized == 'Authorized'
+                Text("Autorizacion : "),
+                _isAuthorized == 'Autorizado'
                     ? Icon(
                         Icons.check,
                         color: Colors.green,
                         size: 50,
                       )
-                    : Text('Unauthorized'),
+                    : Text('Inautorizado'),
               ],
             ),
             SizedBox(

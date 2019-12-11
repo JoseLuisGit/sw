@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'loginPage.dart';
-
+import 'themes/custom_theme.dart';
+import 'themes/themes.dart';
 void main(){
-  runApp(new MyApp());
+  runApp(CustomTheme(
+      initialThemeKey: MyThemeKeys.LIGHT,
+      child: MyApp(),
+    ));
 }
 
  class MyApp extends StatelessWidget {
@@ -10,6 +14,7 @@ void main(){
    Widget build(BuildContext context) {
      return MaterialApp(
        debugShowCheckedModeBanner: false,
+       theme: CustomTheme.of(context),
        home: Scaffold(
          body: LoginPage(),
 

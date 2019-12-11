@@ -94,8 +94,8 @@ class _EstudianteListaState extends State<EstudianteLista> {
                   child: Icon(Icons.person),
                   foregroundColor: Colors.white,
                 ),
-                title: new Text('${widget.estudiante[index].nombre} ${widget.estudiante[index].apellidos}'),
-                subtitle: new Text( 'Registro: ${widget.estudiante[index].registro.toString()}'),
+                title: new Text('${widget.estudiante[index].nombre} ${widget.estudiante[index].apellidos}',style: TextStyle(color: Colors.black),),
+                subtitle: new Text( 'Registro: ${widget.estudiante[index].registro.toString()}',style: TextStyle(color: Colors.black54),),
               ),
             ),
             // actions: <Widget>[

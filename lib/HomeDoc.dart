@@ -8,6 +8,8 @@ import 'package:latlong/latlong.dart';
 import 'ListEstudents.dart';
 import 'utils/Urls.dart';
 import 'Biometric.dart';
+
+import 'AsistenciaEstudiantesMarcar.dart';
 import 'FormEvento.dart';
 import 'package:http/http.dart' as http;
 
@@ -61,6 +63,7 @@ class MateriasLista extends StatefulWidget {
   final List<Materias> materias;
   final int idsemestre;
   final int iddocente;
+
   MateriasLista({Key key, this.materias, this.idsemestre, this.iddocente})
       : super(key: key);
 
@@ -69,6 +72,9 @@ class MateriasLista extends StatefulWidget {
 }
 
 class _MateriasListaState extends State<MateriasLista> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -86,10 +92,10 @@ class _MateriasListaState extends State<MateriasLista> {
                   foregroundColor: Colors.white,
                 ),
                 title: new Text(
-                    '${widget.materias[index].nombre} - ${widget.materias[index].sigla}'),
+                    '${widget.materias[index].nombre} - ${widget.materias[index].sigla}',style: TextStyle(color: Colors.black),),
                 subtitle: new Text(widget.materias[index].gsigla == null
                     ? "No hay descripcion"
-                    : widget.materias[index].gsigla),
+                    : widget.materias[index].gsigla,style: TextStyle(color: Colors.black54),),
               ),
             ),
             actions: <Widget>[
@@ -118,6 +124,7 @@ class _MateriasListaState extends State<MateriasLista> {
                   _verificar(widget.idsemestre, widget.materias[index].idgrupo);
                 },
               ),
+              
             ],
           ),
           onTap: () {
@@ -140,6 +147,15 @@ class _MateriasListaState extends State<MateriasLista> {
     );
   }
 
+ bool isNumeric(String str) {
+  try{
+    var value = double.parse(str);
+  } on FormatException {
+    return false;
+  } 
+  return true;
+}
+
   _verificar(int idsemestre, int idgrupo) async {
     Position localizacionActual;
     try {
@@ -152,7 +168,19 @@ class _MateriasListaState extends State<MateriasLista> {
     final response = await http
         .get("$URL_Horario/verificar?idsemestre=$idsemestre&idgrupo=$idgrupo");
     if (response.statusCode == 200) {
-      print(response.body);
+       print(response.body);
+      if(this.isNumeric(response.body) ){
+
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>AsistenciaEstudianteMarcar(
+          idasistencia: int.parse(response.body),
+          idgrupo: idgrupo,
+          idsemestre: idsemestre,
+        )));
+        
+      // _showDialog('Ya marco la asistencia!!!');
+           return;
+      }
+     
     } else {
       throw Exception('No hay Internet');
     }
@@ -200,6 +228,8 @@ class _MateriasListaState extends State<MateriasLista> {
       }
     }
   }
+
+
 
   void _showDialog(String motivo) {
     // flutter defined function
@@ -249,3 +279,5 @@ class _MateriasListaState extends State<MateriasLista> {
     );
   }
 }
+
+

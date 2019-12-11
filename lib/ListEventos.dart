@@ -98,9 +98,9 @@ class _EventoListaState extends State<EventoLista> {
                     : Text('Inasistido',
                         style: TextStyle(
                             backgroundColor: Colors.red, color: Colors.white)),
-                title: new Text('${widget.evento[index].nombre}'),
+                title: new Text('${widget.evento[index].nombre}',style: TextStyle(color: Colors.black),),
                 subtitle: new Text(
-                    'Descripcion: ${widget.evento[index].descripcion}'),
+                    'Descripcion: ${widget.evento[index].descripcion}',style: TextStyle(color: Colors.black54),),
               ),
             ),
             // actions: <Widget>[
