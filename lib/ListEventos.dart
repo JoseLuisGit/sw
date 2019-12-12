@@ -7,7 +7,7 @@ import 'package:latlong/latlong.dart';
 import 'Biometric.dart';
 import 'utils/Urls.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:http/http.dart' as http;
 import 'models/Evento.dart';
 import 'EstudiantesListaEventos.dart';
@@ -34,9 +34,13 @@ class ListEventos extends StatefulWidget {
 }
 
 class _ListEventosState extends State<ListEventos> {
+  final GlobalKey<ScaffoldState> scaffoldState = GlobalKey();
+ 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+         key: scaffoldState,
         appBar: AppBar(
           title: Text('Eventos de ${widget.nombre}'),
         ),
@@ -55,8 +59,10 @@ class _ListEventosState extends State<ListEventos> {
               }
               return snapshot.hasData
                   ? EventoLista(
+                    scaffoldState: scaffoldState,
                       evento: snapshot.data,
                       tipo: widget.tipo,
+                      
                     )
                   : Center(child: CircularProgressIndicator());
             }));
@@ -64,9 +70,11 @@ class _ListEventosState extends State<ListEventos> {
 }
 
 class EventoLista extends StatefulWidget {
+   final GlobalKey<ScaffoldState> scaffoldState;
   final String tipo;
+
   final List<Evento> evento;
-  EventoLista({Key key, this.evento, this.tipo}) : super(key: key);
+  EventoLista({Key key, this.evento, this.tipo,this.scaffoldState}) : super(key: key);
 
   @override
   _EventoListaState createState() => _EventoListaState();
@@ -85,33 +93,48 @@ class _EventoListaState extends State<EventoLista> {
               color: Colors.white,
               child: new ListTile(
                 leading: new CircleAvatar(
-                  backgroundColor: Colors.indigoAccent,
+                  backgroundColor: estadoEvento(widget.evento[index]),
                   child: Icon(Icons.event),
                   foregroundColor: Colors.white,
                 ),
-                trailing: widget.evento[index].condicion
-                    ? Text(
-                        'Asistido',
-                        style: TextStyle(
-                            backgroundColor: Colors.green, color: Colors.white),
-                      )
-                    : Text('Inasistido',
-                        style: TextStyle(
-                            backgroundColor: Colors.red, color: Colors.white)),
-                title: new Text('${widget.evento[index].nombre}',style: TextStyle(color: Colors.black),),
+                trailing: Visibility(
+                  child: widget.evento[index].condicion
+                      ? Text(
+                          'Asistido',
+                          style: TextStyle(
+                              backgroundColor: Colors.green,
+                              color: Colors.white),
+                        )
+                      : Text('Inasistido',
+                          style: TextStyle(
+                              backgroundColor: Colors.red,
+                              color: Colors.white)),
+                  visible: widget.tipo != 'doc',
+                ),
+                title: new Text(
+                  '${widget.evento[index].nombre}',
+                  style: TextStyle(color: Colors.black),
+                ),
                 subtitle: new Text(
-                    'Descripcion: ${widget.evento[index].descripcion}',style: TextStyle(color: Colors.black54),),
+                  'Descripcion: ${widget.evento[index].descripcion}',
+                  style: TextStyle(color: Colors.black54),
+                ),
               ),
             ),
-            // actions: <Widget>[
-            //   new IconSlideAction(
-            //       caption: 'Camara',
-            //       color: Colors.blueAccent,
-            //       icon: Icons.camera,
-            //       onTap: () {
+            actions: <Widget>[
+              new IconSlideAction(
+                  caption: 'X en Calendario',
+                  color: Colors.blueAccent,
+                  icon: Icons.calendar_today,
+                  onTap: () {
+                    Add2Calendar.addEvent2Cal(llenarCalendario(widget.evento[index])).then((success) {
+                    widget.scaffoldState.currentState.showSnackBar(
+                    SnackBar(content: Text(success ? 'Correcto' : 'Error')));
+              });
 
-            //       }),
-            // ],
+
+                  }),
+            ],
             secondaryActions: <Widget>[
               new IconSlideAction(
                 caption: 'Ver',
@@ -135,6 +158,45 @@ class _EventoListaState extends State<EventoLista> {
       itemCount: widget.evento.length,
     );
   }
+
+  Color estadoEvento(Evento evento) {
+
+    DateTime eventoinicial = DateTime.parse('${evento.fecha} ${evento.horainicio}');
+    print(eventoinicial.toString());
+  
+     DateTime eventofinal = DateTime.parse('${evento.fecha} ${evento.horafin}');
+     print(eventofinal.toString());
+
+     Duration rangovalido = eventofinal.difference(eventoinicial);
+     int rangovalidoMin = rangovalido.inMinutes;
+     
+     Duration rangoFecha = DateTime.now().difference(eventoinicial);
+     int rangoFechaMin = rangoFecha.inMinutes;
+     print(rangovalidoMin);
+     print(rangoFechaMin);
+
+     if(rangoFechaMin<0){
+       return Colors.red;
+     }else if(rangoFechaMin<=rangovalidoMin){
+        return Colors.green;
+
+     }
+
+    
+    return Colors.blueGrey;
+  }
+
+  Event llenarCalendario(Evento evento){
+    Event event = Event(
+      title: evento.nombre,
+      description: evento.descripcion,
+      location: '${evento.latitud} ${evento.longitud}',
+      startDate: DateTime.parse('${evento.fecha} ${evento.horainicio}'),
+      endDate: DateTime.parse('${evento.fecha} ${evento.horafin}').add(Duration(days: 1)),
+      allDay: false,
+    );
+    return event;
+  }
 }
 
 class EventoDetalle extends StatefulWidget {
@@ -154,7 +216,6 @@ class _EventoDetalleState extends State<EventoDetalle> {
         child: FloatingActionButton(
           child: Icon(Icons.fingerprint),
           onPressed: () {
-            
             _verificar(
                 widget.evento.fecha,
                 widget.evento.horainicio,
@@ -163,7 +224,7 @@ class _EventoDetalleState extends State<EventoDetalle> {
                 widget.evento.id);
           },
         ),
-        visible: widget.tipo != 'doc'&&!widget.evento.condicion,
+        visible: widget.tipo != 'doc' && !widget.evento.condicion,
       ),
       appBar: AppBar(
         title: Text('${widget.evento.nombre}'),
@@ -194,7 +255,7 @@ class _EventoDetalleState extends State<EventoDetalle> {
             title: Text('Evento ',
                 style: TextStyle(fontSize: 17.0, color: Colors.blue)),
             subtitle: Text('${widget.evento.nombre}',
-                style: TextStyle(fontSize: 20.0, color: Colors.black)),
+                style: TextStyle(fontSize: 20.0)),
           ),
           ListTile(
             dense: true,
@@ -202,7 +263,7 @@ class _EventoDetalleState extends State<EventoDetalle> {
             title: Text('Descripcion ',
                 style: TextStyle(fontSize: 17.0, color: Colors.blue)),
             subtitle: Text('${widget.evento.descripcion}',
-                style: TextStyle(fontSize: 20.0, color: Colors.black)),
+                style: TextStyle(fontSize: 20.0)),
           ),
           Text('Ubicacion del evento',
               style: TextStyle(fontSize: 17.0, color: Colors.blue)),
@@ -257,7 +318,9 @@ class _EventoDetalleState extends State<EventoDetalle> {
             title: Text('Fecha de inicio del evento',
                 style: TextStyle(fontSize: 17.0, color: Colors.blue)),
             subtitle: Text('${widget.evento.fecha}',
-                style: TextStyle(fontSize: 20.0, color: Colors.black)),
+                style: TextStyle(
+                  fontSize: 20.0,
+                )),
           ),
           ListTile(
             dense: true,
@@ -265,7 +328,9 @@ class _EventoDetalleState extends State<EventoDetalle> {
             title: Text('hora de inicio del evento',
                 style: TextStyle(fontSize: 17.0, color: Colors.blue)),
             subtitle: Text('${widget.evento.horainicio}',
-                style: TextStyle(fontSize: 20.0, color: Colors.black)),
+                style: TextStyle(
+                  fontSize: 20.0,
+                )),
           ),
           ListTile(
             dense: true,
@@ -273,7 +338,9 @@ class _EventoDetalleState extends State<EventoDetalle> {
             title: Text('hora final del evento',
                 style: TextStyle(fontSize: 17.0, color: Colors.blue)),
             subtitle: Text('${widget.evento.horafin}',
-                style: TextStyle(fontSize: 20.0, color: Colors.black)),
+                style: TextStyle(
+                  fontSize: 20.0,
+                )),
           ),
           ListTile(
             dense: true,
@@ -281,7 +348,9 @@ class _EventoDetalleState extends State<EventoDetalle> {
             title: Text('Tolerancia del evento',
                 style: TextStyle(fontSize: 17.0, color: Colors.blue)),
             subtitle: Text('${widget.evento.tolerancia}',
-                style: TextStyle(fontSize: 20.0, color: Colors.black)),
+                style: TextStyle(
+                  fontSize: 20.0,
+                )),
           ),
         ],
       )),

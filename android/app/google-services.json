@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "38468896515",
+    "firebase_url": "https://proyectosw1-f0b07.firebaseio.com",
+    "project_id": "proyectosw1-f0b07",
+    "storage_bucket": "proyectosw1-f0b07.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38468896515:android:5e7cda3c860e76ac034b36",
+        "android_client_info": {
+          "package_name": "com.example.asist_control"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38468896515-d8pe2aqnau5041j4qgkthbunud8bjtjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3J6s-DycyDug3iwbtUwYR8lALC6FtZcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38468896515-d8pe2aqnau5041j4qgkthbunud8bjtjr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

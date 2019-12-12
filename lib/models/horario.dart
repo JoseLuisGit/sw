@@ -56,3 +56,15 @@ Future<List<Horario>> fetchHorario(http.Client client, int id ) async { //int id
     throw Exception('No hay Internet');
   }
 }
+
+
+
+Future<List<Horario>> horarioGrupo(http.Client client, int idsemestre, int idgrupo ) async { //int id
+  final response = await client.get('$URL_Horario/obtener?idsemestre=$idsemestre&&idgrupo=$idgrupo'); //?id=$id'
+  if (response.statusCode == 200) {
+    print(response.body);    
+    return parseHorario(response.body);
+  } else {
+    throw Exception('No hay Internet');
+  }
+}

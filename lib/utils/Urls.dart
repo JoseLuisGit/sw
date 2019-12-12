@@ -1,8 +1,8 @@
-const SERVER_NAME = "10.0.3.2:8000";
+const SERVER_NAME = "10.0.3.2:8000/api";
 const URL_login = "http://$SERVER_NAME/loginmovil"; 
  const URL_Materias="http://$SERVER_NAME/docentematerias";
 const URL_Estudiante="http://$SERVER_NAME/estudiantesmaterias";
- const URL_datos="http://$SERVER_NAME/asistenciaestudiante";
+ const URL_datos="http://$SERVER_NAME/asistenciaestudiante"; 
  const URL_Evento="http://$SERVER_NAME/eventos";
  const URL_Horario="http://$SERVER_NAME/horario";
  const URL_Grupo = "http://$SERVER_NAME/estudiante/materias";
@@ -10,6 +10,9 @@ const URL_Asistencia = "http://$SERVER_NAME/grupo/asistencia";
 const URL_HorarioEst = "http://$SERVER_NAME/grupo/horario/activo";
 const URL_Facultad = "";
 const URL_marcarAsistencia = "http://$SERVER_NAME/registrar/asistencia";
+
+const URL_actualizarToken="http://$SERVER_NAME/user/actualizarToken";
+const URL_enviarNotificacion="http://$SERVER_NAME/enviarNotificacion";
 // const URL_Cliente="http://$SERVER_NAME/Cliente";
 // const URL_CasoNA = "http://$SERVER_NAME/casosNA";
 // const URL_Verificar = "http://$SERVER_NAME/verificar";

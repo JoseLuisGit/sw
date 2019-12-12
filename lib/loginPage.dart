@@ -1,3 +1,6 @@
+import 'package:asist_control/ListEventos.dart';
+import 'package:asist_control/asistencia_page.dart';
+import 'package:asist_control/utils/push_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   bool validateEmail = false;
   bool validatePassword = false;
+  final pushProvider=new PushNotification();//NUEVO
 
   Future<List> _login() async {
     String users = emailController.text;
@@ -172,5 +176,40 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ],
     );
+  }
+
+  void initNotificacion(){
+    pushProvider.initNotifications();
+    pushProvider.mensajes.listen((data){//el data es un map asi se definio en la clase
+      print('Argumento del push');
+      print(data);//Pendiente navegacion
+      if(data['data']['tipoNotificacion']=='evento'){
+        Navigator.push(context, 
+          MaterialPageRoute(
+                        builder:(context)=>ListEventos(
+                          tipo: data['data']['tipo'],
+                          idgrupo: int.parse(data['data']['idgrupo']),
+                          iddt: int.parse(data['data']['iddt']),
+                          idsemestre: int.parse(data['data']['idsemestre']) ,
+                          nombre: data['data']['nombre'],
+                        )
+          )
+        );
+      }else{
+          Navigator.push(context, 
+          MaterialPageRoute(
+                        builder:(context)=>AsistenciaPage(
+                          idgrupo: int.parse(data['data']['idgrupo']),
+                          idsemestre: int.parse(data['data']['idsemestre']),
+                          iddetgrupo: int.parse(data['data']['iddt']),
+                          id: int.parse(data['data']['idestudiante']),
+                          grupo: data['data']['grupo'],
+                          materia: data['data']['nombre'],//de la materia
+                          sigla: data['data']['sigla'],
+                        )
+          )
+        );
+      }
+    });
   }
 }

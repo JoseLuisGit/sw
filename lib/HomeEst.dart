@@ -4,6 +4,7 @@ import 'models/grupos.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
 import 'ListEventos.dart';
+import 'Horarios.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -110,6 +111,18 @@ class _GruposListaState extends State<GruposLista> {
                 ));
                    
                   }),
+
+                  new IconSlideAction(
+                  caption: 'Horario',
+                  color: Colors.yellow,
+                  icon: Icons.hourglass_empty,
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => new HorarioGrupo( idsemestre: widget.idsemestre,
+                                  idgrupo: widget.misGrupos[index].id,)));
+                  })
             ],
             // secondaryActions: <Widget>[
             //   new IconSlideAction(

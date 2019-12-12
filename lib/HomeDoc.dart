@@ -8,6 +8,7 @@ import 'package:latlong/latlong.dart';
 import 'ListEstudents.dart';
 import 'utils/Urls.dart';
 import 'Biometric.dart';
+import 'Horarios.dart';
 
 import 'AsistenciaEstudiantesMarcar.dart';
 import 'FormEvento.dart';
@@ -114,6 +115,17 @@ class _MateriasListaState extends State<MateriasLista> {
                                   nombre: widget.materias[index].nombre,
                                 )));
                   }),
+                   new IconSlideAction(
+                  caption: 'Horario',
+                  color: Colors.yellow,
+                  icon: Icons.hourglass_empty,
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => new HorarioGrupo( idsemestre: widget.idsemestre,
+                                  idgrupo: widget.materias[index].idgrupo,)));
+                  })
             ],
             secondaryActions: <Widget>[
               new IconSlideAction(

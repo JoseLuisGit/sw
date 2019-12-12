@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:http/http.dart' as http;
 import 'models/materias.dart';
+import 'package:asist_control/utils/Urls.dart';
 
 class Biometric extends StatefulWidget {
   final int idAsistencia;
@@ -158,6 +159,7 @@ class _BiometricAuth extends State<BiometricAuth> {
           params['idgrupo'] = widget.idgrupo.toString();
           params['idsemestre'] = widget.idsemestre.toString();
           await crearAsistencia(http.Client(), params);
+          this.enviarNotificacion();//nuevo
         } else if (widget.tipo == 'estevento') {
          
           params['id'] = widget.idevento.toString();
@@ -177,6 +179,14 @@ class _BiometricAuth extends State<BiometricAuth> {
         _isAuthorized = "Unauthorized";
       }
     });
+  }
+  //nuevo
+  enviarNotificacion()async{
+    Map<String,dynamic>data=new Map<String,dynamic>();
+    data['idsemestre']=this.widget.idsemestre.toString();
+    data['idgrupo']=this.widget.idgrupo.toString();
+    data['tipoNotificacion']='asistencia';
+    await http.post(URL_enviarNotificacion,body: data);
   }
 
   @override

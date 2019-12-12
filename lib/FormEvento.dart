@@ -6,6 +6,7 @@ import 'package:latlong/latlong.dart';
 import 'models/Materias.dart';
 import 'models/Estudiante.dart';
 import 'ListEventos.dart';
+import 'package:asist_control/utils/Urls.dart';
 
 class FormEvent extends StatefulWidget {
   final String nombre;
@@ -455,6 +456,8 @@ class _FormEventState extends State<FormEvent> {
                       params['idgrupo'] = widget.idgrupo.toString();
 
                       await crearEvento(http.Client(), params);
+
+                      await this.enviarNotificacion(this.nombreControler.text);//nuevo
                       Navigator.of(context)
                           .pushReplacement(new MaterialPageRoute(
                               builder: (context) => new ListEventos(
@@ -471,7 +474,16 @@ class _FormEventState extends State<FormEvent> {
               ))),
     );
   }
-
+enviarNotificacion(String nombreEvento)async{
+    Map<String,dynamic>data=new Map<String,dynamic>();
+    //data['materia']=this.widget.nombre;
+    data['idsemestre']=this.widget.idsemestre.toString();
+    data['idgrupo']=this.widget.idgrupo.toString();
+    data['nombre']=nombreEvento;
+    data['tipo']='est';//rol estudiante
+    data['tipoNotificacion']='evento';
+    await http.post(URL_enviarNotificacion,body: data);
+}
 }
 
 class DialogContent extends StatefulWidget {

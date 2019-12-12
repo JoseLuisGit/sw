@@ -28,19 +28,19 @@ class _TemasScreenState extends State<TemasScreen> {
                   onPressed: () {
                     _changeTheme(context, MyThemeKeys.LIGHT);
                   },
-                  child: Text("Light!"),
+                  child: Text("Claro"),
                 ),
                 RaisedButton(
                   onPressed: () {
                     _changeTheme(context, MyThemeKeys.DARK);
                   },
-                  child: Text("Dark!"),
+                  child: Text("Oscuro"),
                 ),
                 RaisedButton(
                   onPressed: () {
                     _changeTheme(context, MyThemeKeys.DARKER);
                   },
-                  child: Text("Darker!"),
+                  child: Text("Mas Oscuro"),
                 ),
               
                
