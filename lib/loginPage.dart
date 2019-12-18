@@ -51,14 +51,21 @@ class _LoginPageState extends State<LoginPage> {
                   ) 
               ) 
           );
-      } else {
+      } else {//alumno
+           initNotificacion();//Configuracion Inicial de la notificacion
+           //actualizacion del token
+           Map<String,dynamic>body=new Map<String,dynamic>();
+           body['id']=datauser[0]['id'].toString();
+           body['token']=await this.pushProvider.getToken();
+           final responsePUT = await http.put("$URL_actualizarToken",body: body);
+           print(responsePUT.body);
            Navigator.of(context).pushReplacement(
            new MaterialPageRoute(
               builder: (context) => new DrawerMenuEst(
                     id: datauser[0]['id'],
                     idSemestre: datauser[0]['telefono'],
                     
-                    ) 
+              ) 
              ) 
           );
       }

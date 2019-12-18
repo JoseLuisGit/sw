@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
         opacity: 1,
       ),
       body: FutureBuilder(
-          future:  fetchGrupos(http.Client(), widget.id), //, widget.id
+          future:  fetchGrupos(http.Client(), widget.id,widget.idSemestre), //, widget.id
           
           builder: (context, snapshot) {
             if (snapshot.hasError) {

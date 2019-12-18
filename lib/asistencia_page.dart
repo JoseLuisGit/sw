@@ -85,7 +85,7 @@ class _AsistenciaPageState extends State<AsistenciaPage> {
                                         marcador.latitude)
                                         .then((onValue){
 
-                                          if(onValue==0){
+                                          if(onValue>=0){
 
                                             Navigator.push(context, MaterialPageRoute(
                                               builder: (context)=>Biometric(iddet: widget.iddetgrupo,tipo: 'asist',idAsistencia: miAsistencia.idasistencia,
@@ -94,7 +94,8 @@ class _AsistenciaPageState extends State<AsistenciaPage> {
 
                                           }else{
                                           
-                                          _showAlertDialog(onValue);}
+                                          _showAlertDialog(onValue);
+                                          }
                                         });
             }
           }            

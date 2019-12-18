@@ -499,7 +499,7 @@ class _DialogContentState extends State<DialogContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 500.0,
+      height: MediaQuery.of(context).size.height-200,
       child: new ListView.builder(
           itemCount: widget.estudiantes.length,
           itemBuilder: (BuildContext context, int index) {

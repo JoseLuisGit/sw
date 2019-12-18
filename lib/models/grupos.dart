@@ -52,8 +52,8 @@ List<Grupos> parseGrupos(String responseBody) {
   return parsed.map<Grupos>((json) => Grupos.fromJson(json)).toList();
 }
 
-Future<List<Grupos>> fetchGrupos(http.Client client, int id ) async { //int id
-  final response = await client.get('$URL_Grupo?id=$id'); //?id=$id'
+Future<List<Grupos>> fetchGrupos(http.Client client, int id , int idsemestre) async { //int id
+  final response = await client.get('$URL_Grupo?id=$id&&idsemestre=$idsemestre'); //?id=$id'
   if (response.statusCode == 200) {
     print(response.body);
     return parseGrupos(response.body);

@@ -61,10 +61,10 @@ Future<List<Asistencia>> fetchAsistencia(http.Client client, int id ) async { //
 Future<int> registrarAsistencia(http.Client client, int idAsistencia,int idgrupo, double longitud, double latitud ) async { //int id
   final response = await client.post('$URL_marcarAsistencia?idasistencia=$idAsistencia&idgrupo=$idgrupo&longitud=$longitud&latitud=$latitud'); //?id=$id'
   if (response.statusCode == 200) {    
-    return 0; //retornar la distancia?
+   return int.parse(response.body);
   } else {
     if(response.statusCode == 400){
-      return int.parse(response.body);
+      return -1;
     }else{
       throw Exception('No hay Internet');
     }
